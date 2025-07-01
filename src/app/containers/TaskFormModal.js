@@ -120,24 +120,6 @@ const TaskFormModal = ({ open, handleClose, onSubmit, task }) => {
           />
 
           <Controller
-            name="assigned_to"
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                label="Assigned To"
-                variant="outlined"
-                fullWidth
-                multiple
-                native
-              >
-                <option value={user.id}>{user.name}</option>
-                {/* Add more users as options here */}
-              </Select>
-            )}
-          />
-
-          <Controller
             name="priority"
             control={control}
             render={({ field }) => (
