@@ -3,5 +3,5 @@ export const Colors = {
     white: "#FFFFFF",
     medGrey: "#C4C4C4",
     accent: "#0013FE",
-
+    lightGrey: "#E6ECF0",
 }
