@@ -11,6 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 // Containers
 import Task from "./Task";
+import TaskFormModal from "./TaskFormModal";
 
 // Constants
 import { Colors } from "@/common/constants";
@@ -21,6 +22,7 @@ import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 
 const Board = ({ title, taskList = [] }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [openTaskForm, setOpenTaskForm] = useState(false);
   const open = Boolean(anchorEl);
   return (
     <>
@@ -43,6 +45,7 @@ const Board = ({ title, taskList = [] }) => {
           </Typography>
           <Stack direction={"row"} spacing={1} alignItems="center">
             <IconButton
+              onClick={() => setOpenTaskForm(true)}
               sx={{ backgroundColor: Colors.medGrey, color: Colors.black }}
               aria-label="add task"
             >
@@ -93,6 +96,14 @@ const Board = ({ title, taskList = [] }) => {
           Clear
         </MenuItem>
       </Menu>
+      <TaskFormModal
+        open={openTaskForm}
+        handleClose={() => setOpenTaskForm(false)}
+        onSubmit={(task) => {
+          console.log("Task submitted:", task);
+          setOpenTaskForm(false);
+        }}
+      />
     </>
   );
 };

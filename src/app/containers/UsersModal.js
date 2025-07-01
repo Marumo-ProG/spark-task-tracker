@@ -5,6 +5,7 @@ import Avatar from "@mui/material/Avatar";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 // Components
 
@@ -46,15 +47,18 @@ const UsersModal = ({
                 "&:hover": {
                   backgroundColor: Colors.lightGrey,
                 },
-                backgroundColor: selectedUsers.includes(user.id)
-                  ? Colors.primary
-                  : "transparent",
+                backgroundColor:
+                  selectedUsers.filter((u) => u.id === user.id).length > 0
+                    ? Colors.primary
+                    : "transparent",
               }}
               onClick={() => {
-                if (selectedUsers.includes(user.id)) {
+                if (selectedUsers.filter((u) => u.id === user.id).length > 0) {
                   setSelectedUsers(
-                    selectedUsers.filter((id) => id !== user.id)
+                    selectedUsers.filter((obj) => obj.id !== user.id)
                   );
+                } else {
+                  setSelectedUsers([...selectedUsers, user]);
                 }
               }}
             >
@@ -64,6 +68,9 @@ const UsersModal = ({
               </Typography>
             </Stack>
           ))}
+        </Stack>
+        <Stack alignItems={"end"}>
+          <Button onClick={handleClose}>Done</Button>
         </Stack>
       </Stack>
     </Dialog>

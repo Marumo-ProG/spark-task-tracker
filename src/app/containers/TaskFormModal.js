@@ -18,6 +18,7 @@ import Button from "@mui/material/Button";
 
 // Containers
 import UsersModal from "./UsersModal";
+import DeleteModal from "./DeleteModal";
 
 // Constants
 import { Colors } from "@/common/constants";
@@ -27,7 +28,6 @@ import TestImage from "@/assets/images/test_profile.jpg";
 
 // Icons
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-
 
 const user = {
   id: 1,
@@ -166,18 +166,27 @@ const TaskFormModal = ({ open, handleClose, onSubmit, task }) => {
                 No users selected
               </Typography>
             )}
+
             <Button
               variant="outlined"
               startIcon={<AddRoundedIcon />}
               size="small"
-                onClick={() => setOpenUsersModal(true)}
+              onClick={() => setOpenUsersModal(true)}
               sx={{ color: Colors.primary, borderColor: Colors.primary }}
             >
               Add User
             </Button>
           </Stack>
 
-          <Stack direction="row" justifyContent="flex-end">
+          <Stack direction="row" justifyContent="flex-end" spacing={2}>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={handleClose}
+              sx={{ color: Colors.primary, borderColor: Colors.primary }}
+            >
+              Cancel
+            </Button>
             <button
               type="submit"
               style={{
@@ -194,7 +203,7 @@ const TaskFormModal = ({ open, handleClose, onSubmit, task }) => {
       </Dialog>
       <UsersModal
         open={openUsersModal}
-        handleClose={() => setOpenUsersModal(false)} 
+        handleClose={() => setOpenUsersModal(false)}
         users={users}
         selectedUsers={selectedUsers}
         setSelectedUsers={setSelectedUsers}

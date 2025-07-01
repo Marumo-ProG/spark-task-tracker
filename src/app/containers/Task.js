@@ -21,6 +21,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 // Containers
 import TaskFormModal from "./TaskFormModal";
+import DeleteModal from "./DeleteModal";
 
 // Constants
 import { Colors } from "@/common/constants";
@@ -29,11 +30,12 @@ import { Colors } from "@/common/constants";
 import AttachFileRoundedIcon from "@mui/icons-material/AttachFileRounded";
 import FlagRoundedIcon from "@mui/icons-material/FlagRounded";
 import AccessTimeFilledRoundedIcon from "@mui/icons-material/AccessTimeFilledRounded";
-import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
+import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 
 const Task = ({ task, onEdit, onDelete }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openTaskForm, setOpenTaskForm] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const open = Boolean(anchorEl);
 
   const parsedDate = parseISO(task.due_date);
@@ -42,17 +44,21 @@ const Task = ({ task, onEdit, onDelete }) => {
     <>
       <Paper elevation={0} sx={{}}>
         <Stack padding={2} spacing={2}>
-          <Stack direction="row" alignItems={"center"} justifyContent="space-between">
-          <Typography variant="h6" sx={{ fontSize: 14, fontWeight: 700 }}>
-            {task.title}
-          </Typography>
-          <IconButton
-            sx={{ backgroundColor: Colors.medGrey, color: Colors.black }}
-            aria-label="more options"
-            onClick={(e) => setAnchorEl(e.currentTarget)}
+          <Stack
+            direction="row"
+            alignItems={"center"}
+            justifyContent="space-between"
           >
-            <MoreHorizRoundedIcon sx={{ fontSize: 15 }} />
-          </IconButton>
+            <Typography variant="h6" sx={{ fontSize: 14, fontWeight: 700 }}>
+              {task.title}
+            </Typography>
+            <IconButton
+              sx={{ backgroundColor: Colors.medGrey, color: Colors.black }}
+              aria-label="more options"
+              onClick={(e) => setAnchorEl(e.currentTarget)}
+            >
+              <MoreHorizRoundedIcon sx={{ fontSize: 15 }} />
+            </IconButton>
           </Stack>
           <Typography
             variant="body2"
@@ -146,8 +152,9 @@ const Task = ({ task, onEdit, onDelete }) => {
         </MenuItem>
         <MenuItem
           onClick={() => {
-            onDelete(task.id);
-            setAnchorEl(null);  
+            // onDelete(task.id);
+            setOpenDeleteModal(true);
+            setAnchorEl(null);
           }}
         >
           Delete Task
@@ -161,6 +168,15 @@ const Task = ({ task, onEdit, onDelete }) => {
           setOpenTaskForm(false);
         }}
         task={task}
+      />
+      <DeleteModal
+        open={openDeleteModal}
+        handleClose={() => setOpenDeleteModal(false)}
+        onDelete={() => {
+          // Handle delete action
+          setOpenDeleteModal(false);
+        }}
+        itemName="Task"
       />
     </>
   );
