@@ -19,6 +19,9 @@ import AvatarGroup from "@mui/material/AvatarGroup";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
+// Containers
+import TaskFormModal from "./TaskFormModal";
+
 // Constants
 import { Colors } from "@/common/constants";
 
@@ -30,6 +33,7 @@ import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
 
 const Task = ({ task, onEdit, onDelete }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [openTaskForm, setOpenTaskForm] = useState(false);
   const open = Boolean(anchorEl);
 
   const parsedDate = parseISO(task.due_date);
@@ -133,8 +137,9 @@ const Task = ({ task, onEdit, onDelete }) => {
       <Menu open={open} anchorEl={anchorEl} onClose={() => setAnchorEl(null)}>
         <MenuItem
           onClick={() => {
-            onEdit(task);
+            // onEdit(task);
             setAnchorEl(null);
+            setOpenTaskForm(true);
           }}
         >
           Edit Task
@@ -148,6 +153,15 @@ const Task = ({ task, onEdit, onDelete }) => {
           Delete Task
         </MenuItem>
       </Menu>
+      <TaskFormModal
+        open={openTaskForm}
+        handleClose={() => setOpenTaskForm(false)}
+        onSubmit={(data) => {
+          onEdit({ ...task, ...data });
+          setOpenTaskForm(false);
+        }}
+        task={task}
+      />
     </>
   );
 };
