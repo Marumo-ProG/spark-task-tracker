@@ -55,7 +55,7 @@ const TaskFormModal = ({ open, handleClose, onSubmit, task }) => {
     { id: 4, name: "Bob Brown", image: TestImage },
   ]);
 
-  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState(task?.assigned_to || []);
   const [openUsersModal, setOpenUsersModal] = useState(false);
 
   const handleFormSubmit = (data) => {

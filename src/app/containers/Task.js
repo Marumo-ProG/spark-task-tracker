@@ -103,7 +103,17 @@ const Task = ({ task, onEdit, onDelete }) => {
               </Typography>
             </Stack>
             <IconButton sx={{ padding: 0.5 }} aria-label="flag task">
-              <FlagRoundedIcon sx={{ fontSize: 20, color: "red" }} />
+              <FlagRoundedIcon
+                sx={{
+                  fontSize: 20,
+                  color:
+                    task.priority === "low"
+                      ? Colors.lightGrey
+                      : task.priority === "medium"
+                      ? "orange"
+                      : "red",
+                }}
+              />
             </IconButton>
 
             <Stack direction="row" spacing={1} alignItems="center">
