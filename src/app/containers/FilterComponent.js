@@ -53,7 +53,7 @@ const FilterComponent = ({}) => {
       </Stack>
       <TaskFormModal
         open={openTaskForm}
-        onClose={() => setOpenTaskForm(false)}
+        handleClose={() => setOpenTaskForm(false)}
       />
     </>
   );
