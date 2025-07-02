@@ -1,3 +1,5 @@
+import { useAppContext } from "../AppContext";
+
 // MUI
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -62,7 +64,10 @@ const UsersModal = ({
                 }
               }}
             >
-              <Avatar src={user.image.src} alt={user.name} />
+              <Avatar
+                src={process.env.NEXT_PUBLIC_API_URL + user.image}
+                alt={user.name}
+              />
               <Typography variant="body1" sx={{ color: Colors.black }}>
                 {user.name}
               </Typography>

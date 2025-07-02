@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 // Next MUI integration
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,14 +22,19 @@ export const metadata = {
 // Components
 import MainMenu from "@/app/containers/MainMenu";
 
+// Contexts
+import AppProvider from "./AppContext";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-      <AppRouterCacheProvider>
-        <MainMenu />
-        {children}
-      </AppRouterCacheProvider>
+        <AppProvider>
+          <AppRouterCacheProvider>
+            <MainMenu />
+            {children}
+          </AppRouterCacheProvider>
+        </AppProvider>
       </body>
     </html>
   );

@@ -1,5 +1,7 @@
 "use client";
 
+import { useAppContext } from "../AppContext";
+
 import { useState } from "react";
 
 import { useForm, Controller } from "react-hook-form";
@@ -18,7 +20,6 @@ import Button from "@mui/material/Button";
 
 // Containers
 import UsersModal from "./UsersModal";
-import DeleteModal from "./DeleteModal";
 
 // Constants
 import { Colors } from "@/common/constants";
@@ -48,12 +49,9 @@ const TaskFormModal = ({ open, handleClose, onSubmit, task }) => {
     },
   });
 
-  const [users, setUsers] = useState([
-    { id: 1, name: "John Doe", image: TestImage },
-    { id: 2, name: "Jane Smith", image: TestImage },
-    { id: 3, name: "Alice Johnson", image: TestImage },
-    { id: 4, name: "Bob Brown", image: TestImage },
-  ]);
+  const { allUsers } = useAppContext();
+
+  // const [users, setUsers] = useState(allUsers);
 
   const [selectedUsers, setSelectedUsers] = useState(task?.assigned_to || []);
   const [openUsersModal, setOpenUsersModal] = useState(false);
@@ -156,7 +154,7 @@ const TaskFormModal = ({ open, handleClose, onSubmit, task }) => {
                   <Avatar
                     key={index}
                     alt={user.name}
-                    src={user.image.src}
+                    src={process.env.NEXT_PUBLIC_API_URL + user.image}
                     sx={{ width: 24, height: 24, cursor: "pointer" }}
                   />
                 ))}
@@ -204,7 +202,7 @@ const TaskFormModal = ({ open, handleClose, onSubmit, task }) => {
       <UsersModal
         open={openUsersModal}
         handleClose={() => setOpenUsersModal(false)}
-        users={users}
+        users={allUsers}
         selectedUsers={selectedUsers}
         setSelectedUsers={setSelectedUsers}
       />
