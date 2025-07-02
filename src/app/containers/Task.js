@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 
+import { useAppContext } from "../AppContext";
+
 // Date fns
 import { format, parseISO } from "date-fns";
 
@@ -33,6 +35,7 @@ import AccessTimeFilledRoundedIcon from "@mui/icons-material/AccessTimeFilledRou
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 
 const Task = ({ task }) => {
+  const { reloadTasks } = useAppContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openTaskForm, setOpenTaskForm] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -44,6 +47,9 @@ const Task = ({ task }) => {
   const handleDelete = () => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}api/tasks/${task.id}`, {
       method: "DELETE",
+    }).then(() => {
+      reloadTasks();
+      setOpenDeleteModal(false);
     });
   };
   return (

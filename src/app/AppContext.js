@@ -11,6 +11,10 @@ export const AppProvider = ({ children }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const reloadTasks = () => {
+    fetchTasks();
+  };
+
   const value = {
     user,
     setUser,
@@ -19,6 +23,7 @@ export const AppProvider = ({ children }) => {
     allUsers,
     setAllUsers,
     loading,
+    reloadTasks,
   };
 
   useEffect(() => {

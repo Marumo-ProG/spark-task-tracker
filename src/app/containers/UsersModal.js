@@ -47,7 +47,7 @@ const UsersModal = ({
                 borderRadius: "4px",
                 cursor: "pointer",
                 "&:hover": {
-                  backgroundColor: Colors.lightGrey,
+                  // backgroundColor: Colors.lightGrey,
                 },
                 backgroundColor:
                   selectedUsers.filter((u) => u.id === user.id).length > 0

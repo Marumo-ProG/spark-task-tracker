@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 
+import { useAppContext } from "../AppContext";
+
 // MUI
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -23,6 +25,7 @@ import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 const Board = ({ title, taskList = [] }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openTaskForm, setOpenTaskForm] = useState(false);
+  const { reloadTasks } = useAppContext();
   const open = Boolean(anchorEl);
   return (
     <>
@@ -99,10 +102,6 @@ const Board = ({ title, taskList = [] }) => {
       <TaskFormModal
         open={openTaskForm}
         handleClose={() => setOpenTaskForm(false)}
-        onSubmit={(task) => {
-          console.log("Task submitted:", task);
-          setOpenTaskForm(false);
-        }}
       />
     </>
   );

@@ -36,7 +36,7 @@ const user = {
   image: TestImage,
 };
 
-const TaskFormModal = ({ open, handleClose, onSubmit, task }) => {
+const TaskFormModal = ({ open, handleClose, task }) => {
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       title: task?.title || "",
@@ -49,7 +49,7 @@ const TaskFormModal = ({ open, handleClose, onSubmit, task }) => {
     },
   });
 
-  const { allUsers } = useAppContext();
+  const { allUsers, reloadTasks } = useAppContext();
 
   // const [users, setUsers] = useState(allUsers);
 
@@ -64,14 +64,16 @@ const TaskFormModal = ({ open, handleClose, onSubmit, task }) => {
 
     // posting the data to the server
     if (task) {
-      // Update existing task
-      // onSubmit({ ...data, id: task.id });
       fetch(`${process.env.NEXT_PUBLIC_API_URL}api/tasks/${task.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
+      }).then(() => {
+        reloadTasks();
+        handleClose();
+        reset();
       });
     } else {
       // Create new task
@@ -81,6 +83,10 @@ const TaskFormModal = ({ open, handleClose, onSubmit, task }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
+      }).then(() => {
+        reloadTasks();
+        handleClose();
+        reset();
       });
     }
   };
@@ -189,15 +195,21 @@ const TaskFormModal = ({ open, handleClose, onSubmit, task }) => {
               </Typography>
             )}
 
-            <Button
-              variant="outlined"
-              startIcon={<AddRoundedIcon />}
-              size="small"
-              onClick={() => setOpenUsersModal(true)}
-              sx={{ color: Colors.primary, borderColor: Colors.primary }}
-            >
-              Add User
-            </Button>
+            {task ? (
+              <Button
+                variant="outlined"
+                startIcon={<AddRoundedIcon />}
+                size="small"
+                onClick={() => setOpenUsersModal(true)}
+                sx={{ color: Colors.primary, borderColor: Colors.primary }}
+              >
+                Add User
+              </Button>
+            ) : (
+              <Typography variant="body2" sx={{ color: Colors.medGrey }}>
+                Select users after creating the task :)
+              </Typography>
+            )}
           </Stack>
 
           <Stack direction="row" justifyContent="flex-end" spacing={2}>
