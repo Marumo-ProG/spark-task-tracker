@@ -119,9 +119,9 @@ const Task = ({ task }) => {
                 sx={{
                   fontSize: 20,
                   color:
-                    task.priority === "low"
+                    task.priority.toLowerCase() === "low"
                       ? Colors.lightGrey
-                      : task.priority === "medium"
+                      : task.priority.toLowerCase() === "medium"
                       ? "orange"
                       : "red",
                 }}
