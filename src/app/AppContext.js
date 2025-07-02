@@ -47,7 +47,7 @@ export const AppProvider = ({ children }) => {
   const fetchTasks = async () => {
     try {
       const response = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "/api/tasks"
+        process.env.NEXT_PUBLIC_API_URL + "api/tasks"
       );
       if (!response.ok) {
         throw new Error("Failed to fetch tasks");

@@ -57,8 +57,32 @@ const TaskFormModal = ({ open, handleClose, onSubmit, task }) => {
   const [openUsersModal, setOpenUsersModal] = useState(false);
 
   const handleFormSubmit = (data) => {
-    onSubmit(data);
-    reset();
+    data.user_id = allUsers[0].id; // Assuming the first user is the author
+    data.assigned_to = [...selectedUsers.map((user) => user.id)];
+
+    console.log("Form Data:", data);
+
+    // posting the data to the server
+    if (task) {
+      // Update existing task
+      // onSubmit({ ...data, id: task.id });
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}api/tasks/${task.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+    } else {
+      // Create new task
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}api/tasks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+    }
   };
 
   return (

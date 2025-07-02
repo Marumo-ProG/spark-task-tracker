@@ -32,7 +32,7 @@ import FlagRoundedIcon from "@mui/icons-material/FlagRounded";
 import AccessTimeFilledRoundedIcon from "@mui/icons-material/AccessTimeFilledRounded";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 
-const Task = ({ task, onEdit, onDelete }) => {
+const Task = ({ task }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openTaskForm, setOpenTaskForm] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -40,6 +40,12 @@ const Task = ({ task, onEdit, onDelete }) => {
 
   const parsedDate = parseISO(task.due_date);
   const formated_date = format(parsedDate, "MMM dd");
+
+  const handleDelete = () => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}api/tasks/${task.id}`, {
+      method: "DELETE",
+    });
+  };
   return (
     <>
       <Paper elevation={0} sx={{}}>
@@ -139,11 +145,11 @@ const Task = ({ task, onEdit, onDelete }) => {
             max={2}
             sx={{ "& .MuiAvatar-root": { width: 24, height: 24 } }}
           >
-            {task.assigned_to.map((assignee, index) => (
+            {task.assigned_to?.map((assignee, index) => (
               <Avatar
                 key={index}
                 alt={assignee.name}
-                src={assignee.image.src}
+                src={process.env.NEXT_PUBLIC_API_URL + assignee.image}
                 sx={{ width: 24, height: 24, cursor: "pointer" }}
               />
             ))}
@@ -153,7 +159,6 @@ const Task = ({ task, onEdit, onDelete }) => {
       <Menu open={open} anchorEl={anchorEl} onClose={() => setAnchorEl(null)}>
         <MenuItem
           onClick={() => {
-            // onEdit(task);
             setAnchorEl(null);
             setOpenTaskForm(true);
           }}
@@ -162,7 +167,6 @@ const Task = ({ task, onEdit, onDelete }) => {
         </MenuItem>
         <MenuItem
           onClick={() => {
-            // onDelete(task.id);
             setOpenDeleteModal(true);
             setAnchorEl(null);
           }}
@@ -183,7 +187,7 @@ const Task = ({ task, onEdit, onDelete }) => {
         open={openDeleteModal}
         handleClose={() => setOpenDeleteModal(false)}
         onDelete={() => {
-          // Handle delete action
+          handleDelete();
           setOpenDeleteModal(false);
         }}
         itemName="Task"

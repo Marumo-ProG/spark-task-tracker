@@ -61,7 +61,7 @@ const Board = ({ title, taskList = [] }) => {
           </Stack>
         </Stack>
         <Stack spacing={2} mt={2}>
-          {taskList.map((task, index) => (
+          {taskList?.map((task, index) => (
             <Task key={index} task={task} />
           ))}
         </Stack>
